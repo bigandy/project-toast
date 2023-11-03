@@ -7,9 +7,14 @@ import { ToastContext } from "../ToastProvider";
 function ToastShelf() {
   const { toasts, deleteToast } = React.useContext(ToastContext);
   return (
-    <ol className={styles.wrapper}>
-      {Boolean(toasts.length > 0) &&
-        toasts.map((toast, index) => {
+    <ol
+      className={styles.wrapper}
+      role="region"
+      aria-live="polite"
+      aria-label="Notification"
+    >
+      {Boolean(toasts?.length > 0) &&
+        toasts?.map((toast, index) => {
           return (
             <li className={styles.toastWrapper} key={toast.id}>
               <Toast
