@@ -2,8 +2,10 @@ import React from "react";
 
 import Toast from "../Toast";
 import styles from "./ToastShelf.module.css";
+import { ToastContext } from "../ToastProvider";
 
-function ToastShelf({ toasts, onDeleteToast }) {
+function ToastShelf() {
+  const { toasts, deleteToast } = React.useContext(ToastContext);
   return (
     <ol className={styles.wrapper}>
       {Boolean(toasts.length > 0) &&
@@ -12,7 +14,7 @@ function ToastShelf({ toasts, onDeleteToast }) {
             <li className={styles.toastWrapper} key={toast.id}>
               <Toast
                 variant={toast.variant}
-                handleDismiss={() => onDeleteToast(index)}
+                handleDismiss={() => deleteToast(index)}
                 message={toast.message}
               />
             </li>

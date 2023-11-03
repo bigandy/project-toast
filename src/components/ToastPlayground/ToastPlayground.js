@@ -5,43 +5,21 @@ import ToastShelf from "../ToastShelf";
 
 import styles from "./ToastPlayground.module.css";
 
+import { ToastContext } from "../ToastProvider";
+
 const VARIANT_OPTIONS = ["notice", "warning", "success", "error"];
 const defaultVariant = VARIANT_OPTIONS[0];
 
 function ToastPlayground() {
-  const [toasts, setToasts] = React.useState("");
+  const { addToast } = React.useContext(ToastContext);
   const [selectedVariant, setSelectedVariant] = React.useState(defaultVariant);
   const [message, setMessage] = React.useState("");
-
-  const handleDeleteToast = React.useCallback((index) => {
-    // setShowMessage(false);
-
-    console.log("delete this one from the state", index);
-
-    // delete the item with index from the array
-
-    setToasts((prevToasts) => {
-      const nextToasts = [...prevToasts];
-      nextToasts.splice(index, 1);
-      return nextToasts;
-    });
-  }, []);
 
   const handleSubmit = (e) => {
     e.preventDefault();
 
-    setToasts((prevToasts) => {
-      return [
-        ...prevToasts,
-        {
-          message,
-          variant: selectedVariant,
-          id: crypto.randomUUID(),
-        },
-      ];
-    });
+    addToast(e.target.value, selectedVariant);
     setMessage("");
-    // setSelectedVariant(defaultVariant);
   };
 
   const handleKeyDown = (e) => {
@@ -57,7 +35,7 @@ function ToastPlayground() {
         <h1>Toast Playground</h1>
       </header>
 
-      <ToastShelf onDeleteToast={handleDeleteToast} toasts={toasts} />
+      <ToastShelf />
       <form onSubmit={handleSubmit}>
         <div className={styles.controlsWrapper}>
           <div className={styles.row}>
