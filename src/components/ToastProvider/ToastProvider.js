@@ -28,6 +28,7 @@ function ToastProvider({ children }) {
         {
           message,
           variant,
+          // Generate random id on creation. Used for key.
           id: crypto.randomUUID(),
         },
       ];
